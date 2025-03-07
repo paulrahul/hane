@@ -39,17 +39,27 @@ async function getArchiveLink(hnStoryId) {
     let response = await fetch(hnUrl);
     let text = await response.text();
 
-    // Decode HTML entities (e.g., &#x2F; → /)
+    // function decodeHtmlEntities(text) {
+    //     let textarea = document.createElement("textarea");
+    //     textarea.innerHTML = text;
+    //     return textarea.value;
+    // }
+
     function decodeHtmlEntities(encodedStr) {
         return encodedStr.replace(/&#x2F;/g, "/");
-    }
+    }    
+
+    let decodedText = decodeHtmlEntities(text); // Decode first!
 
     // Search for an archive link in the HTML
-    let archiveLinkMatch = text.match(/href="(https?:&#x2F;&#x2F;archive\.[a-z]+&#x2F;[^"]+)"/i);
+    // let archiveLinkMatch = text.match(/href="(https?:&#x2F;&#x2F;archive\.[a-z]+&#x2F;[^"]+)"/i);
+    // let archiveLinkMatch = decodedText.match(/href="(https?:\/\/web\.archive\.org\/[^"]+)"/i);
+
+    let archiveLinkMatch = decodedText.match(/href="(https?:\/\/(?:web\.archive\.org|archive\.[a-z]+|webcitation\.org|perma\.cc|wayback\.archive-it\.org|arquivo\.pt|pandora\.nla\.gov\.au|webarchive\.org\.uk|nationalarchives\.gov\.uk|loc\.gov\/websites|webarchive\.loc\.gov)\/[^"]+)"/i);
 
     if (archiveLinkMatch) {
-        let encodedLink = archiveLinkMatch[1];  // Extract encoded URL
-        return decodeHtmlEntities(encodedLink); // Decode and return the proper URL
+        return archiveLinkMatch[1];  // Extract encoded URL
+        // return decodeHtmlEntities(encodedLink); // Decode and return the proper URL
     }
 
     return null;
