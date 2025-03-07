@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacker News Summary</title>
+    <style>
+        body { font-family: Arial, sans-serif; width: 300px; padding: 10px; }
+        #summary, #ai-summary { white-space: pre-wrap; margin-top: 5px; }
+        h4 { margin-bottom: 2px; }
+        #api-key { width: 140px; padding: 4px; font-size: 12px; }
+        #save-key { padding: 4px 8px; font-size: 12px; margin-left: 5px; }
+        #get-ai-summary { font-size: 12px; padding: 4px 8px; margin-top: 5px; }
+        .error { border: 1px solid red; }
+        .tooltip { color: red; font-size: 10px; display: none; }
+        #comment-controls { display: flex; gap: 10px; margin-top: 5px; }
+        #ai-controls { display: flex; gap: 5px; align-items: center; }
+        #more-comments, #prev-comments { cursor: pointer; color: blue; text-decoration: underline; display: none; }
+        #model-select {
+            font-size: 12px;
+            padding: 4px 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: white;
+            cursor: pointer;
+        }
+        #model-select:focus {
+            border-color: #007bff;
+            outline: none;
+        }        
+    </style>
+</head>
+<body>
+
+    <h3>Hacker News Summary</h3>
+
+    <h4>OpenAI API Key (stored only in client local storage) </h4>
+    <input type="password" id="api-key" placeholder="Enter API Key">
+    <button id="save-key">Save</button>
+    <div id="api-key-tooltip" class="tooltip">API key required</div>
+    
+    <h4>AI Summary</h4>
+    <div id="ai-controls">
+        <button id="get-ai-summary" disabled>AI Summary (Uses API Key)</button>
+        <select id="model-select">
+            <option value="gpt-3.5-turbo" selected>GPT-3.5 Turbo</option>
+            <option value="gpt-4o">GPT-4o</option>
+        </select>
+    </div>
+    <div id="ai-summary"></div>
+
+    <h4>Hacker News Comments</h4>
+    <div id="summary">Fetching comments...</div>
+    <div id="comment-controls">
+        <div id="prev-comments">Previous</div>
+        <div id="more-comments">More</div>
+    </div>
+
+    <input type="hidden" id="allComments">
+
+    <script type="text/javascript" src="purify.min.js"></script>
+    <script src="popup.js"></script>
+</body>
+</html>

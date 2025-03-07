@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "HaNe",
+  "version": "1.0",
+  "description": "Find and open the archive link for the current page's Hacker News entry.",
+  "permissions": ["tabs", "activeTab", "scripting", "storage", "notifications", "contextMenus"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": ["https://hn.algolia.com/*", "https://news.ycombinator.com/*"],
+  "action": {
+    "default_title": "Find HN Archive"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
