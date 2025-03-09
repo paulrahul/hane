@@ -16,11 +16,30 @@ chrome.runtime.onInstalled.addListener(() => {
 
 async function getHNEntry(url) {
     async function searchHN(query) {
-        const searchQuery = encodeURIComponent(query);
-        let searchUrl = `https://hn.algolia.com/api/v1/search?query=${searchQuery}&tags=story&restrictSearchableAttributes=url`;
-        let response = await fetch(searchUrl);
-        let data = await response.json();
-        return data.hits.length > 0 ? data.hits[0].objectID : null;
+        const swapDomain = (url) => {
+            if (url.includes("twitter.com")) {
+                return url.replace(/(?:https?:\/\/)?twitter\.com/g, "https://x.com");
+            } else if (url.includes("x.com")) {
+                return url.replace(/(?:https?:\/\/)?x\.com/g, "https://twitter.com");
+            }
+            return url; // Return unchanged if it's not one of these domains
+        };
+
+        const fetchResults = async (q) => {            
+            const searchQuery = encodeURIComponent(q);
+            let searchUrl = `https://hn.algolia.com/api/v1/search?query=${searchQuery}&tags=story&restrictSearchableAttributes=url`;
+            let response = await fetch(searchUrl);
+            let data = await response.json();
+            return data.hits.length > 0 ? data.hits[0].objectID : null;
+        };
+
+        let result = await fetchResults(query);
+        if (!result) {
+            let swappedQuery = swapDomain(query);
+            result = await fetchResults(swappedQuery);
+        }
+    
+        return result;
     }
 
     let hnStoryId = await searchHN(url);
