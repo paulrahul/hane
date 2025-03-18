@@ -3,7 +3,7 @@
   "name": "HaNe",
   "version": "1.0",
   "description": "Utility Chrome extension for Hacker News",
-  "permissions": ["tabs", "activeTab", "storage", "notifications", "contextMenus"],
+  "permissions": ["activeTab", "storage", "notifications", "contextMenus"],
   "background": {
     "service_worker": "background.js"
   },
