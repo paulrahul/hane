@@ -42,7 +42,16 @@ async function aiSummarizeText(comments, apiKey) {
     : comments;
 
     const model = document.getElementById("model-select").value; // Get selected model
-    const prompt = `Summarise the following comments. Your response should contain two sections: 1. A para with the overall summary 2. A few bullet points highlighting the main opinions. Comments: ${truncatedComments}`;
+    const prompt = `
+Summarise the following Hacker News comments. Structure your response into four sections:
+
+1. **Overall Summary**: A short paragraph capturing the essence of the discussion.
+2. **Main Opinions**: A few bullet points highlighting the most important perspectives and arguments.
+3. **Most Positive Comments**: Return 3–5 of the most positive or supportive comments in their original wording (without rewriting them).
+4. **Most Negative Comments**: Return 3–5 of the most negative or critical comments in their original wording (without rewriting them).
+
+Comments: ${truncatedComments}
+`;
 
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
@@ -108,7 +117,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         chrome.storage.local.get("hane_openai_key", async (data) => {
             if (!data.hane_openai_key) {
                 // aiSummaryDiv.textContent = "No API key saved. Please enter one.";
-                
+
                 apiKeyInput.classList.add("error");
                 apiKeyTooltip.style.display = "block";
                 apiKeyInput.focus();
@@ -130,7 +139,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             const summary = await aiSummarizeText(allComments, data.hane_openai_key);
             if (summary) {
-                aiSummaryDiv.textContent = summary;
+                var converter = new showdown.Converter();
+                html      = converter.makeHtml(summary);
+                // aiSummaryDiv.textContent = summary;
+                aiSummaryDiv.innerHTML = html;
             } else {
                 aiSummaryDiv.textContent = "Error generating AI summary.";
             }

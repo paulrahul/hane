@@ -6,7 +6,7 @@
     <title>Hacker News Summary</title>
     <style>
         body { font-family: Arial, sans-serif; width: 300px; padding: 10px; }
-        #summary, #ai-summary { white-space: pre-wrap; margin-top: 5px; }
+        #summary, #ai-summary { white-space: nowrap; margin-top: 5px; }
         h4 { margin-bottom: 2px; }
         #api-key { width: 140px; padding: 4px; font-size: 12px; }
         #save-key { padding: 4px 8px; font-size: 12px; margin-left: 5px; }
@@ -59,6 +59,8 @@
     <input type="hidden" id="allComments">
 
     <script type="text/javascript" src="purify.min.js"></script>
+    <script type="text/javascript" src="showdown.min.js"></script>
+
     <script src="popup.js"></script>
 </body>
 </html>
