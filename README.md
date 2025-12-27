@@ -13,4 +13,4 @@ HaNe does NOT send any private user data to any foreign machine or entity. Users
 
 ## Contact
 - hane.extension@gmail.com
-- [Buy Me A :beer:](buymeacoffee.com/serendipt)
+- [Buy Me A :beer:](https://buymeacoffee.com/serendipt)
