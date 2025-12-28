@@ -37,8 +37,8 @@ const APPROX_CHAR_PER_TOKEN = 4; // Rough estimate for English text
 const MAX_CHARS = MAX_TOKENS * APPROX_CHAR_PER_TOKEN; // Limit input size
 
 async function aiSummarizeText(comments, apiKey) {
-    const truncatedComments = comments.length > MAX_CHARS 
-    ? comments.slice(0, MAX_CHARS) + "..." 
+    const truncatedComments = comments.length > MAX_CHARS
+    ? comments.slice(0, MAX_CHARS) + "..."
     : comments;
 
     const model = document.getElementById("model-select").value; // Get selected model
