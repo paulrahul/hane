@@ -29,6 +29,11 @@ async function getHNEntry(url) {
             const searchQuery = encodeURIComponent(q);
             let searchUrl = `https://hn.algolia.com/api/v1/search?query=${searchQuery}&tags=story&restrictSearchableAttributes=url`;
             let response = await fetch(searchUrl);
+            if (response.status / 200 != 1) {
+                // either 4xx or 5xx which indicates an error.
+                throw Error(`Encountered error ${response.status}, ${response.message} while calling URL ${searchUrl}`);
+            }
+
             let data = await response.json();
             return data.hits.length > 0 ? data.hits[0].objectID : null;
         };
